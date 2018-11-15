@@ -60,31 +60,29 @@ class App extends Component {
   render() {
     return <div className="App">
         <div>
-        <h1>Time Savings Calculator: Manual Process vs. ERM Software</h1>
-          <h2>Your company's details</h2>
           <Form 
             handleInputChange={this.handleInputChange} 
             input1value={this.state.businessUnits} 
             input2value={this.state.riskControlOwners} 
             input3value={this.state.periodicAssessments} 
           />
-          <h2>Your time saved</h2>
-          <Subtotal 
-            label="Risk assessment planning & execution"
-            value={this.diffAssumptionsTotals()} 
-          />
-          <Subtotal
-            label="Initial and ongoing risk owner training"
-            value={this.diffRiskOwnerTrainingTotals()} 
-          />
-          <Subtotal
-            label="Data aggregation, analysis & reporting"
-            value={this.diffReportingTotals()}
-          />
           <Total 
             label="Total time saved"
             value={this.calculateMainTotal()}
           />
+        <Subtotal
+          label="Risk assessment planning & execution"
+          value={this.diffAssumptionsTotals()}
+        />
+        <Subtotal
+          label="Initial and ongoing risk owner training"
+          value={this.diffRiskOwnerTrainingTotals()}
+        />
+        <Subtotal
+          label="Data aggregation, analysis & reporting"
+          value={this.diffReportingTotals()}
+        />
+
         </div>
       </div>;
   }

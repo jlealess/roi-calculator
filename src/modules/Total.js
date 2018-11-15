@@ -22,7 +22,7 @@ const Total = ({ label, value }) => (
       {label}
     </span>
     <span>
-      {hoursToWeeks(value)} weeks ({value} hours)
+      {hoursToWeeks(value)} weeks
     </span>
   </StyledTotal>
 );
