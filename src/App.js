@@ -9,7 +9,6 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      accordionOpen: false,
       businessUnits: "15", 
       periodicAssessments: "4",
       riskControlOwners: "40", 
