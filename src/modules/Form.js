@@ -3,7 +3,8 @@ import NumInput from './NumInput';
 import styled from 'styled-components';
 
 const StyledForm = styled.form`
-  margin: 15px 0 20px;
+  font-size: 18px;
+  font-weight: 700;
 `; 
 
 const Form = ({
@@ -12,7 +13,7 @@ const Form = ({
     input2value,
     input3value,
 }) => (
-  <div className="tsc-calc__form">
+  <div className="tsc-calc__form card">
     <StyledForm>
       <NumInput
         name="businessUnits"

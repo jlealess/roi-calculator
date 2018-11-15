@@ -1,15 +1,34 @@
 import React from "react";
 import styled from "styled-components";
 
-
 const StyledTotal = styled.div`
+  align-items: center;
   display: flex;
-  font-weight: bold;
-  border-top: 1px solid black;
-  font-size: 1.125em;
   justify-content: space-between;
-  line-height: 2.5;
-  margin-top: 5px;
+  line-height: 1.3;
+
+  .label {
+    font-size: 18px;
+  }
+
+  .label,
+  .value--num {
+    font-weight: bold;
+  }
+
+  .value {
+    align-items: center;
+    display: flex;
+  }
+
+  .value--num {
+    color: #7ac142;
+    font-size: 24px;
+  }
+
+  .value--units {
+    font-size: ${props => (props.secondary ? "15px" : "20px")};
+  }
 `;
 
 const hoursToWeeks = hours => {
@@ -18,12 +37,17 @@ const hoursToWeeks = hours => {
 
 const Total = ({ label, value }) => (
   <StyledTotal>
-    <span>
+    <span className="label">
       {label}
     </span>
-    <span>
-      {hoursToWeeks(value)} weeks
-    </span>
+    <div className="value">
+      <span className="value--num">
+        {hoursToWeeks(value)}
+      </span>
+      <span className="value--units">
+        {" "} Weeks
+      </span>
+    </div>
   </StyledTotal>
 );
 

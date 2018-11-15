@@ -4,15 +4,21 @@ import styled from "styled-components";
 const StyledField = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-bottom: 1em;
+
   input {
     -moz-appearance: textfield;
     -webkit-appearance: textfield;
     appearance: textfield;
+    border: 1px solid #cccccc;
+    border-radius: 3px;
     box-sizing: border-box;
+    color: #757575;
+    font-weight: 300;
     font-size: 1em;
     line-height: 1.25;
-    text-align: right;
-    width: 100px;
+    text-align: center;
+    width: 65px;
     &::-webkit-inner-spin-button,
     &::-webkit-outer-spin-button {
       -webkit-appearance: none;
