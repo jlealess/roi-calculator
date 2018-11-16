@@ -39,6 +39,7 @@ const NumInput = ({ handleInputChange, labelText, name, value }) => (
       onKeyPress={handleKeypress}
       value={value}
       min="0"
+      max="1000"
     />
   </StyledField>
 );

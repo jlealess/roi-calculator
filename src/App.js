@@ -9,9 +9,9 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      businessUnits: "15", 
-      periodicAssessments: "4",
-      riskControlOwners: "40", 
+      businessUnits: 15, 
+      periodicAssessments: 4,
+      riskControlOwners: 40, 
     };
     this.handleInputChange = this.handleInputChange.bind(this);
   }
@@ -60,15 +60,14 @@ class App extends Component {
   render() {
     return <div className="App">
         <div>
-        <h1>Time Savings Calculator: Manual Process vs. ERM Software</h1>
-          <h2>Your company's details</h2>
+          <h2>Input your company's details</h2>
           <Form 
             handleInputChange={this.handleInputChange} 
             input1value={this.state.businessUnits} 
             input2value={this.state.riskControlOwners} 
             input3value={this.state.periodicAssessments} 
           />
-          <h2>Your time saved</h2>
+          <h2>Time saved (hours per year)</h2>
           <Subtotal 
             label="Risk assessment planning & execution"
             value={this.diffAssumptionsTotals()} 
