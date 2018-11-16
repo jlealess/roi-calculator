@@ -57,23 +57,30 @@ class App extends Component {
 
   handleInputChange(e) {
     if (e.target.type === "number") {
-      e.target.value = parseInt(e.target.value, 10);
-    }
+      e.target.value = Number(e.target.value);
+
+      if (e.which < 48 || e.which > 57) {
+        e.preventDefault();
+      }
+
+      e.target.value = (e.target.value.length > 5) ? e.target.value.substring(0, 5) : e.target.value;
+    } 
     this.setState({
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     })    
   }
 
   render() {
     return <div className="App">
-        <div>
+      <section className="input">
           <h2>Input your company's details</h2>
           <Form handleInputChange={this.handleInputChange} input1value={this.state.businessUnits} input2value={this.state.riskControlOwners} input3value={this.state.periodicAssessments} />
-
           <div className="card">
             <Subtotal primary label="Total time saved" units="weeks" value={this.calculateMainTotal()} />
           </div>
-          <h2>How we calculate your time savings</h2>
+      </section>
+      <section className="output">
+        <h2>How we calculate your time savings</h2>
         <Accordion
           cardHeadingLabel="Risk assessment planning & execution"
           cardHeadingValue={this.diffAssumptionsTotals()}
@@ -108,86 +115,86 @@ class App extends Component {
             data.numAssessments.resolver
           )}
         />
-          <Accordion 
-            rows={[
-              {
-                rowLabel: "Initial risk and control owner training (group setting, one session / year)",
-                manualValue: data.initialRiskTrainingSessionsPerYear,
-                resolverValue: data.initialRiskTrainingSessionsPerYear,
-              },
-              {
-                  rowLabel: "Hours spent supporting each risk owners per risk assessment",
-                  manualValue: data.hoursPerAssessment.manual,
-                  resolverValue: data.hoursPerAssessment.resolver
-              },
-              {
-                rowLabel: "Number of risk / control / issue owners",
-                manualValue: this.state.riskControlOwners,
-                resolverValue: this.state.riskControlOwners
-              },
-              {
-                rowLabel: "Number of periodic assessments per year",
-                manualValue: this.state.periodicAssessments,
-                resolverValue: this.state.periodicAssessments
-              }
+        <Accordion
+          rows={[
+            {
+              rowLabel: "Initial risk and control owner training (group setting, one session/year)",
+              manualValue: data.initialRiskTrainingSessionsPerYear,
+              resolverValue: data.initialRiskTrainingSessionsPerYear,
+            },
+            {
+              rowLabel: "Hours spent supporting each risk owners per risk assessment",
+              manualValue: data.hoursPerAssessment.manual,
+              resolverValue: data.hoursPerAssessment.resolver
+            },
+            {
+              rowLabel: "Number of risk/control/issue owners",
+              manualValue: this.state.riskControlOwners,
+              resolverValue: this.state.riskControlOwners
+            },
+            {
+              rowLabel: "Number of periodic assessments per year",
+              manualValue: this.state.periodicAssessments,
+              resolverValue: this.state.periodicAssessments
+            }
 
-            ]}
-            cardHeadingLabel="Initial and ongoing risk owner training"
-            cardHeadingValue={this.diffRiskOwnerTrainingTotals()}
-            manualTotal={this.calculateRiskOwnerTrainingTotal(
+          ]}
+          cardHeadingLabel="Initial and ongoing risk owner training"
+          cardHeadingValue={this.diffRiskOwnerTrainingTotals()}
+          manualTotal={this.calculateRiskOwnerTrainingTotal(
             data.hoursPerAssessment.manual)}
-            resolverTotal={this.calculateRiskOwnerTrainingTotal(
+          resolverTotal={this.calculateRiskOwnerTrainingTotal(
             data.hoursPerAssessment.resolver)}
-          />
-          <Accordion 
-            cardHeadingLabel="Data aggregation, analysis & reporting" 
-            cardHeadingValue={this.diffReportingTotals()}
-            rows={[
-              {
-                rowLabel: "Number of critical risk reports per year",
-                 manualValue: data.numCriticalRiskReportsPerYear,
-                 resolverValue: data.numCriticalRiskReportsPerYear
-              },
-              {
-                rowLabel: "Number of issue reports per year",
-                manualValue: data.numIssueReportsPerYear,
-                resolverValue: data.numIssueReportsPerYear
-              },
-              {
-                rowLabel: "Number of quarterly reports (quarterly report per business unit per year",
-                manualValue: data.numQuarterlyReportsPerYear,
-                resolverValue: data.numQuarterlyReportsPerYear
-              },
-              {
-                rowLabel: "Number of Monthly Reports per year",
-                manualValue: data.numMonthlyReportsPerYear,
-                resolverValue: data.numMonthlyReportsPerYear
-              },
-              {
-                rowLabel: "Number of ad-hoc reports per year (i.e. emerging risks, loss event analysis, root cause analysis, etc)",
-                manualValue: data.numAdhocReportsPerYear,
-                resolverValue: data.numAdhocReportsPerYear
-              },
-              {
-                rowLabel: "Number of business units / functions in the organization",
-                manualValue: this.state.businessUnits,
-                resolverValue: this.state.businessUnits
-              },
-              {
-                rowLabel: "Total Number of Reports per year",
-                manualValue: this.calculateTotalReportsPerYear(),
-                resolverValue: this.calculateTotalReportsPerYear()
-              },
-              {
-                rowLabel: "Approx.number of hours spent on each report",
-                manualValue: data.hoursPerReport.manual,
-                resolverValue: data.hoursPerReport.resolver
-              }
-            ]}
-            manualTotal={this.calculateReportingTotal(data.hoursPerReport.manual)}
-            resolverTotal={this.calculateReportingTotal(data.hoursPerReport.resolver)}
-          />
-        </div>
+        />
+        <Accordion
+          cardHeadingLabel="Data aggregation, analysis and reporting"
+          cardHeadingValue={this.diffReportingTotals()}
+          rows={[
+            {
+              rowLabel: "Number of critical risk reports per year",
+              manualValue: data.numCriticalRiskReportsPerYear,
+              resolverValue: data.numCriticalRiskReportsPerYear
+            },
+            {
+              rowLabel: "Number of issue reports per year",
+              manualValue: data.numIssueReportsPerYear,
+              resolverValue: data.numIssueReportsPerYear
+            },
+            {
+              rowLabel: "Number of quarterly reports (quarterly report per business unit per year",
+              manualValue: data.numQuarterlyReportsPerYear,
+              resolverValue: data.numQuarterlyReportsPerYear
+            },
+            {
+              rowLabel: "Number of monthly reports per year",
+              manualValue: data.numMonthlyReportsPerYear,
+              resolverValue: data.numMonthlyReportsPerYear
+            },
+            {
+              rowLabel: "Number of ad-hoc reports per year (i.e. emerging risks, loss event analysis, root cause analysis, etc.)",
+              manualValue: data.numAdhocReportsPerYear,
+              resolverValue: data.numAdhocReportsPerYear
+            },
+            {
+              rowLabel: "Number of business units/functions in the organization",
+              manualValue: this.state.businessUnits,
+              resolverValue: this.state.businessUnits
+            },
+            {
+              rowLabel: "Total number of reports per year",
+              manualValue: this.calculateTotalReportsPerYear(),
+              resolverValue: this.calculateTotalReportsPerYear()
+            },
+            {
+              rowLabel: "Approx. number of hours spent on each report",
+              manualValue: data.hoursPerReport.manual,
+              resolverValue: data.hoursPerReport.resolver
+            }
+          ]}
+          manualTotal={this.calculateReportingTotal(data.hoursPerReport.manual)}
+          resolverTotal={this.calculateReportingTotal(data.hoursPerReport.resolver)}
+        />      
+        </section>
       </div>;
   }
 }
