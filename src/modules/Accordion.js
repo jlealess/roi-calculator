@@ -35,7 +35,6 @@ const StyledAccordion = styled.div`
     margin: 1px 0 0 5px;
     position: relative;
     transform: rotate(-45deg);
-    /* vertical-align: top; */
     width: 0.45em;
   }
 
@@ -77,8 +76,8 @@ class Accordion extends React.Component {
                 }
               </div>
               <button className="accordion-toggle" onClick={this.toggleAccordion}>
-                  {this.state.accordionOpen ? "Collapse details" : "Expand details"}
-                  <span className={`chevron ${this.state.accordionOpen ? "" : "bottom"}`}></span>
+                {this.state.accordionOpen ? "Collapse details" : "Expand details"}
+                <span className={`chevron ${this.state.accordionOpen ? "" : "bottom"}`}></span>
               </button>
           </StyledAccordion>
       )
