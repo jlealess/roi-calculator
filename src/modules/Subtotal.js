@@ -9,7 +9,7 @@ const StyledTotal = styled.div`
   line-height: 1.3;
 
   .label {
-    font-size: ${props => (props.primary ? "22px" : "18px")};
+    font-size: 18px;
   }
 
   .label,
@@ -24,12 +24,26 @@ const StyledTotal = styled.div`
 
   .value--num {
     color: #7ac142;
-    font-size: ${props => (props.primary ? "30px" : "24px")};
+    font-size: 24px;
   }
 
   .value--units {
     font-size: ${props => (props.primary ? "20px" : "15px")};
     padding-left: 5px;
+  }
+
+  @media (max-width: 500px) {
+    flex-wrap: wrap;
+    justify-content: ${props => (props.primary ? "space-between" : "center")};
+    text-align: ${props => (props.primary ? "left" : "center")};
+
+    .label {
+      font-size: ${props => (props.primary ? "18px" : "16px")};
+    }
+
+    .value {
+      padding-top: ${props => (props.primary ? "0" : "5px")};
+    }
   }
 `;
 
