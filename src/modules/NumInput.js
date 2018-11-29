@@ -11,6 +11,10 @@ const StyledField = styled.div`
     margin-bottom: 0;
   }
 
+  @supports (display: grid) {
+    grid-template-columns: 1fr 100px;
+  }
+
   input {
     -moz-appearance: textfield;
     -webkit-appearance: textfield;
@@ -19,12 +23,13 @@ const StyledField = styled.div`
     border-radius: 3px;
     box-sizing: border-box;
     color: #757575;
-    flex: 0 0 70px;
     font-weight: 300;
     font-size: 1em;
+    height: 45px;
     line-height: 1.25;
     margin-left: 20px;
-    height: 45px;
+    max-width: 90px;
+    padding: 0 8px;
     text-align: center;
     &::-webkit-inner-spin-button,
     &::-webkit-outer-spin-button {

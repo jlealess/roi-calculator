@@ -19,6 +19,7 @@ const StyledTable = styled.table`
   thead th {
     border-left: none;
     border-right: none;
+    font-weight: 700;
   }
 
   thead th,

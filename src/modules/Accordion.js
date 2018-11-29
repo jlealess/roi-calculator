@@ -19,6 +19,10 @@ const StyledAccordion = styled.div`
     position: absolute;
     right: 0;
     text-transform: uppercase;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   .accordion-toggle:after {

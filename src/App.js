@@ -1,9 +1,35 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import './App.css';
 import Form from './modules/Form';
 import Subtotal from "./modules/Subtotal";
 import Accordion from './modules/Accordion';
 import { data } from './data';
+
+const StyledApp = styled.div`
+  font-family: "Nunito Sans", Arial, sans-serif;
+  font-size: 15px;
+
+  h2 {
+    font-weight: 300;
+    margin: 40px 0 20px;
+  }
+
+  .card {
+    background-color: #fefefe;
+    border: 1px solid #dae0e0;
+    border-radius: 3px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+    margin-bottom: 20px;
+    padding: 25px;
+  }
+
+  @media (max-width: 500px) {
+    .card {
+      padding: 20px;
+    }
+  }
+`;
 
 class App extends Component {
   constructor(props) {
@@ -71,7 +97,7 @@ class App extends Component {
   }
 
   render() {
-    return <div className="App">
+    return <StyledApp>
       <section className="input">
           <h2>Input your company's details</h2>
           <Form handleInputChange={this.handleInputChange} input1value={this.state.businessUnits} input2value={this.state.riskControlOwners} input3value={this.state.periodicAssessments} />
@@ -195,7 +221,7 @@ class App extends Component {
           resolverTotal={this.calculateReportingTotal(data.hoursPerReport.resolver)}
         />      
         </section>
-      </div>;
+    </StyledApp>;
   }
 }
 
