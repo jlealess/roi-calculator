@@ -35,7 +35,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      businessUnits: 15, 
+      businessUnits: 0, 
       periodicAssessments: 4,
       riskControlOwners: 40, 
     };
@@ -43,42 +43,51 @@ class App extends Component {
   }
 
   calculateAssumptionsTotal(planningHours, numAssessments) {
-    return (parseInt(this.state.riskControlOwners) * parseInt(this.state.periodicAssessments * planningHours)) + parseInt(numAssessments);
+    const assumptionsTotal = (parseInt(this.state.riskControlOwners) * parseInt(this.state.periodicAssessments * planningHours)) + parseInt(numAssessments);
+    return this.checkForZeroValue(assumptionsTotal);
   }
 
   calculateTotalReportsPerYear() {
-    return data.numCriticalRiskReportsPerYear +
+    const totalReportsPerYear = data.numCriticalRiskReportsPerYear +
     data.numIssueReportsPerYear + (
       data.numQuarterlyReportsPerYear * this.state.businessUnits
-    ) + data.numMonthlyReportsPerYear + data.numAdhocReportsPerYear
+    ) + data.numMonthlyReportsPerYear + data.numAdhocReportsPerYear;
+    return this.checkForZeroValue(totalReportsPerYear);
   }
 
   calculateMainTotal() {
-    return parseInt(this.diffRiskOwnerTrainingTotals()) + parseInt(this.diffAssumptionsTotals()) + parseInt(this.diffReportingTotals());
+    const mainTotal = parseInt(this.diffRiskOwnerTrainingTotals()) + parseInt(this.diffAssumptionsTotals()) + parseInt(this.diffReportingTotals());
+    return this.checkForZeroValue(mainTotal);
   }
 
   calculateReportingTotal(hoursPerReport) {
-    const TotalNumReportsPerYear = data.numCriticalRiskReportsPerYear + data.numIssueReportsPerYear + (data.numQuarterlyReportsPerYear * this.state.businessUnits) + data.numMonthlyReportsPerYear + data.numAdhocReportsPerYear;
-    return parseInt(hoursPerReport * TotalNumReportsPerYear);
+    const totalNumReportsPerYear = data.numCriticalRiskReportsPerYear + data.numIssueReportsPerYear + (data.numQuarterlyReportsPerYear * this.state.businessUnits) + data.numMonthlyReportsPerYear + data.numAdhocReportsPerYear;
+    const reportingTotal = parseInt(hoursPerReport * totalNumReportsPerYear);
+    return this.checkForZeroValue(reportingTotal);
   }
 
   calculateRiskOwnerTrainingTotal(hoursPerAssessment) {
-    return data.initialRiskTrainingSessionsPerYear + hoursPerAssessment * this.state.riskControlOwners * this.state.periodicAssessments;
+    const riskOwnerTrainingTotal = data.initialRiskTrainingSessionsPerYear + hoursPerAssessment * this.state.riskControlOwners * this.state.periodicAssessments;
+    return this.checkForZeroValue(riskOwnerTrainingTotal);
   }
 
   diffAssumptionsTotals() {
     const diff = this.calculateAssumptionsTotal(data.planningHours.manual, data.numAssessments.manual) - this.calculateAssumptionsTotal(data.planningHours.resolver, data.numAssessments.resolver);
-    return (diff > 0 ? diff : 0);
+    return this.checkForZeroValue(diff);
   }
 
   diffReportingTotals() {
     const diff = (this.calculateReportingTotal(data.hoursPerReport.manual) - this.calculateReportingTotal(data.hoursPerReport.resolver)).toFixed(0);
-    return diff;
+    return this.checkForZeroValue(diff);
   }
 
   diffRiskOwnerTrainingTotals() {
     const diff = this.calculateRiskOwnerTrainingTotal(data.hoursPerAssessment.manual) - this.calculateRiskOwnerTrainingTotal(data.hoursPerAssessment.resolver);
-    return diff;
+    return this.checkForZeroValue(diff);
+  }
+
+  checkForZeroValue(data) {
+    return (!this.state.businessUnits ? 0 : data);
   }
 
   handleInputChange(e) {
@@ -113,13 +122,13 @@ class App extends Component {
           rows={[
             {
               rowLabel: "Hours spent planning and executing each risk assessment",
-              manualValue: data.planningHours.manual,
-              resolverValue: data.planningHours.resolver
+              manualValue: this.checkForZeroValue(data.planningHours.manual),
+              resolverValue: this.checkForZeroValue(data.planningHours.resolver)
             },
             {
               rowLabel: "Number of risk assessments per year",
               manualValue: this.state.periodicAssessments,
-              resolverValue: this.state.periodicAssessments
+              resolverValue: this.checkForZeroValue(this.state.periodicAssessments)
             },
             {
               rowLabel: "Number of risk/control/issue owners",
@@ -145,13 +154,13 @@ class App extends Component {
           rows={[
             {
               rowLabel: "Initial risk and control owner training (group setting, one session/year)",
-              manualValue: data.initialRiskTrainingSessionsPerYear,
-              resolverValue: data.initialRiskTrainingSessionsPerYear,
+              manualValue: this.checkForZeroValue(data.initialRiskTrainingSessionsPerYear),
+              resolverValue: this.checkForZeroValue(data.initialRiskTrainingSessionsPerYear),
             },
             {
               rowLabel: "Hours spent supporting each risk owners per risk assessment",
-              manualValue: data.hoursPerAssessment.manual,
-              resolverValue: data.hoursPerAssessment.resolver
+              manualValue: this.checkForZeroValue(data.hoursPerAssessment.manual),
+              resolverValue: this.checkForZeroValue(data.hoursPerAssessment.resolver)
             },
             {
               rowLabel: "Number of risk/control/issue owners",
@@ -178,27 +187,27 @@ class App extends Component {
           rows={[
             {
               rowLabel: "Number of critical risk reports per year",
-              manualValue: data.numCriticalRiskReportsPerYear,
+              manualValue: this.checkForZeroValue(data.numCriticalRiskReportsPerYear),
               resolverValue: data.numCriticalRiskReportsPerYear
             },
             {
               rowLabel: "Number of issue reports per year",
-              manualValue: data.numIssueReportsPerYear,
+              manualValue: this.checkForZeroValue(data.numIssueReportsPerYear),
               resolverValue: data.numIssueReportsPerYear
             },
             {
               rowLabel: "Number of quarterly reports (quarterly report per business unit per year",
-              manualValue: data.numQuarterlyReportsPerYear,
+              manualValue: this.checkForZeroValue(data.numQuarterlyReportsPerYear),
               resolverValue: data.numQuarterlyReportsPerYear
             },
             {
               rowLabel: "Number of monthly reports per year",
-              manualValue: data.numMonthlyReportsPerYear,
+              manualValue: this.checkForZeroValue(data.numMonthlyReportsPerYear),
               resolverValue: data.numMonthlyReportsPerYear
             },
             {
               rowLabel: "Number of ad-hoc reports per year (i.e. emerging risks, loss event analysis, root cause analysis, etc.)",
-              manualValue: data.numAdhocReportsPerYear,
+              manualValue: this.checkForZeroValue(data.numAdhocReportsPerYear),
               resolverValue: data.numAdhocReportsPerYear
             },
             {
@@ -214,7 +223,7 @@ class App extends Component {
             {
               rowLabel: "Approx. number of hours spent on each report",
               manualValue: data.hoursPerReport.manual,
-              resolverValue: data.hoursPerReport.resolver
+              resolverValue: this.checkForZeroValue(data.hoursPerReport.resolver)
             }
           ]}
           manualTotal={this.calculateReportingTotal(data.hoursPerReport.manual)}
